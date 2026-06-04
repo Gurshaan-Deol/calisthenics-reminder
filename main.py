@@ -1,6 +1,9 @@
 import json
 import sys
 import tkinter as tk
+import winsound
+
+from plyer import notification
 
 WINDOW_TITLE = "Calisthenics"
 TIMER_FONT = ("Segoe UI", 36, "bold")
@@ -81,6 +84,16 @@ class CountdownApp:
         )
         self.label_detail.pack(padx=20, pady=(0, 14))
 
+    def _notify(self):
+        ex = self.exercise
+        notification.notify(
+            title="Time to move!",
+            message=f"{ex['name']} — {ex['sets']} sets × {ex['reps']} reps",
+            app_name=WINDOW_TITLE,
+            timeout=8,
+        )
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+
     def _advance_exercise(self):
         exercises = self.cfg["exercises"]
         self.exercise_index = (self.exercise_index + 1) % len(exercises)
@@ -104,7 +117,7 @@ class CountdownApp:
         if self.remaining > 0:
             self.remaining -= 1
         else:
-            print("Time's up!")
+            self._notify()
             self._advance_exercise()
             self.remaining = self.interval
         self.root.after(1000, self._tick)
