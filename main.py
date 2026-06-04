@@ -43,6 +43,7 @@ class CountdownApp:
         self.cfg = cfg
         self.interval = int(cfg["interval_minutes"] * 60)
         self.remaining = self.interval
+        self.exercise_index = 0
         self.exercise = cfg["exercises"][0]
         self._build_window()
         self._position_window()
@@ -80,6 +81,14 @@ class CountdownApp:
         )
         self.label_detail.pack(padx=20, pady=(0, 14))
 
+    def _advance_exercise(self):
+        exercises = self.cfg["exercises"]
+        self.exercise_index = (self.exercise_index + 1) % len(exercises)
+        self.exercise = exercises[self.exercise_index]
+        self.label_exercise.config(text=self.exercise["name"])
+        detail = f"{self.exercise['sets']} sets  ×  {self.exercise['reps']} reps"
+        self.label_detail.config(text=detail)
+
     def _position_window(self):
         self.root.update_idletasks()
         w = self.root.winfo_width()
@@ -96,6 +105,7 @@ class CountdownApp:
             self.remaining -= 1
         else:
             print("Time's up!")
+            self._advance_exercise()
             self.remaining = self.interval
         self.root.after(1000, self._tick)
 
