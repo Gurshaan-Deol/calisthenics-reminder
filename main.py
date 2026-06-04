@@ -82,7 +82,32 @@ class CountdownApp:
             self.root, text=detail, font=DETAIL_FONT,
             bg=BG_COLOR, fg=DIM_COLOR
         )
-        self.label_detail.pack(padx=20, pady=(0, 14))
+        self.label_detail.pack(padx=20, pady=(0, 10))
+
+        btn_frame = tk.Frame(self.root, bg=BG_COLOR)
+        btn_frame.pack(padx=16, pady=(0, 14), fill="x")
+
+        btn_style = dict(font=LABEL_FONT, relief="flat", cursor="hand2",
+                         activeforeground=BG_COLOR, bd=0, padx=10, pady=4)
+
+        tk.Button(
+            btn_frame, text="Done",
+            bg=ACCENT_COLOR, fg=BG_COLOR, activebackground=ACCENT_COLOR,
+            command=self._on_done, **btn_style
+        ).pack(side="left", expand=True, fill="x", padx=(0, 4))
+
+        tk.Button(
+            btn_frame, text="Snooze",
+            bg=DIM_COLOR, fg=BG_COLOR, activebackground=DIM_COLOR,
+            command=self._on_snooze, **btn_style
+        ).pack(side="left", expand=True, fill="x", padx=(4, 0))
+
+    def _on_done(self):
+        self._advance_exercise()
+        self.remaining = self.interval
+
+    def _on_snooze(self):
+        self.remaining += int(self.cfg["snooze_minutes"] * 60)
 
     def _notify(self):
         ex = self.exercise
