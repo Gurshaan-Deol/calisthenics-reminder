@@ -5,12 +5,12 @@
 Commit plan:
 
 - [x] `init: project scaffold, config.json, requirements.txt, README`
-- [ ] `feat: always-on-top countdown window`
-- [ ] `feat: exercise cycling from config`
-- [ ] `feat: desktop notification + sound on timer end`
-- [ ] `feat: snooze and done buttons`
-- [ ] `feat: system tray icon`
-- [ ] `feat: windows autostart on login`
+- [x] `feat: always-on-top countdown window`
+- [x] `feat: exercise cycling from config`
+- [x] `feat: desktop notification + sound on timer end`
+- [x] `feat: snooze and done buttons`
+- [x] `feat: system tray icon`
+- [x] `feat: windows autostart on login`
 
 ## V2 — Scheduling + Tracking
 
