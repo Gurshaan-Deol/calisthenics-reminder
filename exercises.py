@@ -2,6 +2,8 @@ import datetime
 import json
 import sys
 
+import history
+
 
 # Returned by ExerciseCycler on days when no exercises are scheduled.
 REST_DAY_EXERCISE = {"name": "No exercises today", "sets": 0, "reps": 0}
@@ -75,6 +77,8 @@ class ExerciseCycler:
     def advance(self):
         if self._index is None:
             return REST_DAY_EXERCISE
+        # Stage the exercise being completed so timer.reset() can log it.
+        history._stage(self._exercises[self._index]["name"])
         n = len(self._exercises)
         for step in range(1, n + 1):
             candidate = (self._index + step) % n

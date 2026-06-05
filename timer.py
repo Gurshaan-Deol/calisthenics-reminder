@@ -1,3 +1,6 @@
+import history
+
+
 def format_time(seconds):
     m, s = divmod(seconds, 60)
     return f"{m:02d}:{s:02d}"
@@ -17,6 +20,7 @@ class Timer:
         self._remaining += self._snooze
 
     def reset(self):
+        history.log_set()
         self._remaining = self._interval
 
     def _tick(self):
