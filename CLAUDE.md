@@ -17,10 +17,14 @@ A lightweight Windows calisthenics reminder app. The top priority after correctn
 
 ## Architecture
 
-Keep the codebase flat and simple for now:
+Flat module layout:
 
 ```
-main.py        # entry point, wires everything together
+main.py        # entry point, argparse (--autostart / --remove-autostart), CountdownApp wiring
+exercises.py   # load_config(), ExerciseCycler (current/advance)
+timer.py       # format_time(), Timer class (after() loop, snooze, reset)
+tray.py        # TrayIcon class (pystray icon, Show/Hide/Quit menu)
+ui.py          # Panel class (Tkinter window, labels, buttons, positioning)
 config.json    # user config, loaded at startup
 requirements.txt
 README.md
@@ -28,7 +32,7 @@ ROADMAP.md
 CLAUDE.md      # this file
 ```
 
-Do not create subfolders or split into modules until the codebase clearly needs it.
+Do not create subfolders or add further modules without a clear reason.
 
 ## Commit discipline
 
