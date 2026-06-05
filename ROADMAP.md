@@ -14,10 +14,11 @@ Commit plan:
 
 ## V2 — Scheduling + Tracking
 
-- Per-exercise day scheduling (`"days": "daily"` or `["mon", "wed", "fri"]`)
-- Log-a-set mode: timer starts after marking a set done
-- Daily set tracking saved to a local JSON log
-- History view inside the app
+- [ ] `feat: day scheduling per exercise in config and exercises.py`
+- [ ] `feat: daily set tracking saved to history.json`
+- [ ] `feat: history summary expanded in panel`
+- [ ] `feat: log-a-set timer mode`
+- [ ] `feat: switch timer mode from tray menu`
 
 ## V3 — Polish
 
