@@ -18,9 +18,7 @@ class Timer:
         self._remaining = interval_seconds
         self._on_ring = on_ring
         self._on_tick = on_tick
-        # on_rest_end fires when the log-mode rest countdown reaches zero.
-        # Defaults to on_ring so fixed-mode callers that don't pass it still work.
-        # The next commit will wire a proper callback that notifies without advancing.
+        # on_rest_end fires when log-mode rest countdown reaches zero; defaults to on_ring.
         self._on_rest_end = on_rest_end if on_rest_end is not None else on_ring
         self._mode = mode
         self._waiting = (mode == "log")

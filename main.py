@@ -68,11 +68,13 @@ class CountdownApp:
             snooze_seconds=snooze,
             on_ring=self._on_ring,
             on_tick=self._panel.set_time,
+            on_rest_end=self._on_rest_end,
         )
         self._tray = TrayIcon(
             WINDOW_TITLE,
             on_toggle=lambda: root.after(0, self._panel.toggle),
             on_quit=self._quit,
+            on_mode_switch=lambda mode: root.after(0, lambda: self._on_mode_switch(mode)),
         )
 
     def _on_done(self):
@@ -89,6 +91,20 @@ class CountdownApp:
         notification.notify(
             title="Time to move!",
             message=f"{ex['name']} — {ex['sets']} sets × {ex['reps']} reps",
+            app_name=WINDOW_TITLE,
+            timeout=NOTIFICATION_TIMEOUT,
+        )
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+
+    def _on_mode_switch(self, mode):
+        self._timer.set_mode(mode)
+        self._panel.set_mode_label(mode)
+
+    def _on_rest_end(self):
+        ex = self._cycler.current()
+        notification.notify(
+            title="Rest over!",
+            message=f"Ready for {ex['name']} — {ex['sets']} sets × {ex['reps']} reps",
             app_name=WINDOW_TITLE,
             timeout=NOTIFICATION_TIMEOUT,
         )

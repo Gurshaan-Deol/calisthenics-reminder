@@ -47,6 +47,12 @@ class Panel:
             bg=BG_COLOR, fg=DIM_COLOR
         ).pack(padx=20, pady=(12, 0))
 
+        self.label_mode = tk.Label(
+            self.root, text="Mode: Fixed", font=HISTORY_FONT,
+            bg=BG_COLOR, fg=DIM_COLOR
+        )
+        self.label_mode.pack(padx=20)
+
         self.label_time = tk.Label(
             self.root, text="", font=TIMER_FONT,
             bg=BG_COLOR, fg=ACCENT_COLOR
@@ -136,6 +142,9 @@ class Panel:
 
     def set_time(self, text):
         self.label_time.config(text=text)
+
+    def set_mode_label(self, mode):
+        self.label_mode.config(text=f"Mode: {mode.capitalize()}")
 
     def set_exercise(self, name, sets, reps):
         self.label_exercise.config(text=name)
