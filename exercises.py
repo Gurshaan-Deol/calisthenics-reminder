@@ -9,7 +9,8 @@ import history
 REST_DAY_EXERCISE = {"name": "No exercises today", "sets": 0, "reps": 0}
 
 _CONFIG_PATH = "config.json"
-_config = None  # populated by load_config(); updated by reload_config()
+_config = None   # populated by load_config(); updated by reload_config()
+_cycler = None   # reference to the active ExerciseCycler; set at construction time
 
 
 def _is_scheduled(exercise):
@@ -74,10 +75,19 @@ def save_config(config):
         json.dump(config, f, indent=2, ensure_ascii=False)
 
 
+def reset_cycler():
+    """Point the active ExerciseCycler at the freshly loaded exercise list and reset its index."""
+    if _cycler is not None:
+        _cycler._exercises = _config["exercises"]
+        _cycler._index = _cycler._first_scheduled()
+
+
 class ExerciseCycler:
     def __init__(self, exercises):
+        global _cycler
         self._exercises = exercises
         self._index = self._first_scheduled()
+        _cycler = self
 
     def _first_scheduled(self):
         """Return the index of the first exercise scheduled for today, or None."""

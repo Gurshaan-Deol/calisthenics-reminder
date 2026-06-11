@@ -37,6 +37,13 @@ class Timer:
         else:
             raise ValueError(f"Unknown timer mode: {mode!r}")
 
+    def apply_config(self, interval_seconds, snooze_seconds):
+        """Apply updated interval and snooze from settings. Clamps remaining if it now exceeds the new interval."""
+        self._interval = interval_seconds
+        self._snooze = snooze_seconds
+        if self._remaining > interval_seconds:
+            self._remaining = interval_seconds
+
     def snooze(self):
         self._remaining += self._snooze
 

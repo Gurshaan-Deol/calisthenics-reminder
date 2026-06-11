@@ -71,7 +71,10 @@ class CountdownApp:
             on_tick=self._panel.set_time,
             on_rest_end=self._on_rest_end,
         )
-        self._settings = SettingsWindow(root)
+        self._settings = SettingsWindow(
+            root,
+            on_timer_update=lambda i, s: self._timer.apply_config(i, s),
+        )
         self._tray = TrayIcon(
             WINDOW_TITLE,
             on_toggle=lambda: root.after(0, self._panel.toggle),
