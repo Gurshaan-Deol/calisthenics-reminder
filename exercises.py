@@ -78,16 +78,20 @@ def save_config(config):
 def reset_cycler():
     """Point the active ExerciseCycler at the freshly loaded exercise list and reset its index."""
     if _cycler is not None:
-        _cycler._exercises = _config["exercises"]
-        _cycler._index = _cycler._first_scheduled()
+        _cycler.reset(_config["exercises"])
 
 
 class ExerciseCycler:
-    def __init__(self, exercises):
+    def __init__(self, exercise_list):
         global _cycler
-        self._exercises = exercises
+        self._exercises = exercise_list
         self._index = self._first_scheduled()
         _cycler = self
+
+    def reset(self, exercise_list):
+        """Replace the exercise list and restart from the first scheduled exercise."""
+        self._exercises = exercise_list
+        self._index = self._first_scheduled()
 
     def _first_scheduled(self):
         """Return the index of the first exercise scheduled for today, or None."""

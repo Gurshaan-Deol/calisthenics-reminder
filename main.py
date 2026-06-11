@@ -74,6 +74,7 @@ class CountdownApp:
         self._settings = SettingsWindow(
             root,
             on_timer_update=lambda i, s: self._timer.apply_config(i, s),
+            on_exercises_update=self._on_exercises_update,
         )
         self._tray = TrayIcon(
             WINDOW_TITLE,
@@ -101,6 +102,10 @@ class CountdownApp:
             timeout=NOTIFICATION_TIMEOUT,
         )
         winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+
+    def _on_exercises_update(self):
+        ex = self._cycler.current()
+        self._panel.set_exercise(ex["name"], ex["sets"], ex["reps"])
 
     def _on_mode_switch(self, mode):
         self._timer.set_mode(mode)

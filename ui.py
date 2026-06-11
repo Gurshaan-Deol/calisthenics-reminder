@@ -19,6 +19,12 @@ MARGIN_BOTTOM = 60
 MAX_HISTORY = 5
 
 
+def _detail_text(sets, reps):
+    if sets == 0:
+        return ""
+    return f"{sets} sets  ×  {reps} reps"
+
+
 def _format_entry_time(iso_ts):
     dt = datetime.datetime.fromisoformat(iso_ts)
     h = dt.hour % 12 or 12
@@ -67,10 +73,9 @@ class Panel:
         )
         self.label_exercise.pack(padx=20, pady=(8, 2))
 
-        detail = f"{exercise['sets']} sets  ×  {exercise['reps']} reps"
         self.label_detail = tk.Label(
-            self.root, text=detail, font=DETAIL_FONT,
-            bg=BG_COLOR, fg=DIM_COLOR
+            self.root, text=_detail_text(exercise["sets"], exercise["reps"]),
+            font=DETAIL_FONT, bg=BG_COLOR, fg=DIM_COLOR
         )
         self.label_detail.pack(padx=20, pady=(0, 10))
 
@@ -148,7 +153,7 @@ class Panel:
 
     def set_exercise(self, name, sets, reps):
         self.label_exercise.config(text=name)
-        self.label_detail.config(text=f"{sets} sets  ×  {reps} reps")
+        self.label_detail.config(text=_detail_text(sets, reps))
 
     def hide(self):
         self.root.withdraw()
