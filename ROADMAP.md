@@ -22,6 +22,8 @@ Commit plan:
 
 ## V3 — Polish
 
-- In-app settings UI (no more manual JSON editing)
-- Configurable panel position (corner snapping)
-- Optional dark/light theme
+- feat: settings window scaffold opened from tray menu
+  feat: timer settings (interval and snooze) editable in settings window
+  feat: exercise list editable in settings window (add, edit, remove)
+  feat: day scheduling editable per exercise in settings window
+  chore: V3 complete — final polish pass

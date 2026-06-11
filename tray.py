@@ -13,7 +13,7 @@ def _make_tray_image():
 
 
 class TrayIcon:
-    def __init__(self, title, on_toggle, on_quit, on_mode_switch=None):
+    def __init__(self, title, on_toggle, on_quit, on_mode_switch=None, on_settings=None):
         self._mode = "fixed"
         self._on_mode_switch = on_mode_switch
 
@@ -26,6 +26,7 @@ class TrayIcon:
                 ),
                 self._handle_mode_switch,
             ),
+            pystray.MenuItem("Settings", lambda icon, item: on_settings() if on_settings else None),
             pystray.MenuItem("Quit", lambda icon, item: on_quit()),
         )
         self._icon = pystray.Icon("calisthenics", _make_tray_image(), title, menu)

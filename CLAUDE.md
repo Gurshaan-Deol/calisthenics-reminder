@@ -21,10 +21,11 @@ Flat module layout:
 
 ```
 main.py        # entry point, argparse (--autostart / --remove-autostart), CountdownApp wiring
-exercises.py   # load_config(), ExerciseCycler (current/advance)
+exercises.py   # load_config(), get_config(), reload_config(), save_config(), ExerciseCycler
 timer.py       # format_time(), Timer class (after() loop, snooze, reset)
-tray.py        # TrayIcon class (pystray icon, Show/Hide/Quit menu)
+tray.py        # TrayIcon class (pystray icon, Show/Hide/Settings/Quit menu)
 ui.py          # Panel class (Tkinter window, labels, buttons, positioning)
+settings.py    # SettingsWindow class (Toplevel, ttk.Notebook tabs, Save button)
 config.json    # user config, loaded at startup
 requirements.txt
 README.md

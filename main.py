@@ -8,6 +8,7 @@ import winsound
 from plyer import notification
 
 from exercises import load_config, ExerciseCycler
+from settings import SettingsWindow
 from timer import Timer
 from tray import TrayIcon
 from ui import Panel, WINDOW_TITLE
@@ -70,11 +71,13 @@ class CountdownApp:
             on_tick=self._panel.set_time,
             on_rest_end=self._on_rest_end,
         )
+        self._settings = SettingsWindow(root)
         self._tray = TrayIcon(
             WINDOW_TITLE,
             on_toggle=lambda: root.after(0, self._panel.toggle),
             on_quit=self._quit,
             on_mode_switch=lambda mode: root.after(0, lambda: self._on_mode_switch(mode)),
+            on_settings=lambda: root.after(0, self._settings.open),
         )
 
     def _on_done(self):

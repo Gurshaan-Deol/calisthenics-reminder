@@ -8,6 +8,9 @@ import history
 # Returned by ExerciseCycler on days when no exercises are scheduled.
 REST_DAY_EXERCISE = {"name": "No exercises today", "sets": 0, "reps": 0}
 
+_CONFIG_PATH = "config.json"
+_config = None  # populated by load_config(); updated by reload_config()
+
 
 def _is_scheduled(exercise):
     """True if the exercise is scheduled for today's weekday (1=Mon … 7=Sun)."""
@@ -32,6 +35,7 @@ def _validate_days(days_val, exercise_name):
 
 
 def load_config(path="config.json"):
+    global _config
     try:
         with open(path, "r") as f:
             cfg = json.load(f)
@@ -50,7 +54,24 @@ def load_config(path="config.json"):
         if "days" in ex:
             _validate_days(ex["days"], ex.get("name", "unnamed"))
 
+    _config = cfg
     return cfg
+
+
+def get_config():
+    """Return the currently loaded config dict."""
+    return _config
+
+
+def reload_config():
+    """Re-read config.json and update the in-memory config."""
+    load_config(_CONFIG_PATH)
+
+
+def save_config(config):
+    """Write config dict back to config.json with pretty formatting."""
+    with open(_CONFIG_PATH, "w") as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
 
 
 class ExerciseCycler:
